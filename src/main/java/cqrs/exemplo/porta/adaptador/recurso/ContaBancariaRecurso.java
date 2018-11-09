@@ -2,7 +2,7 @@ package cqrs.exemplo.porta.adaptador.recurso;
 
 import cqrs.exemplo.aplicacao.comando.AdicionarContaBancaria;
 import cqrs.exemplo.aplicacao.comando.AtualizarContaBancaria;
-import cqrs.exemplo.aplicacao.comando.ContaBancariaServico;
+import cqrs.exemplo.aplicacao.comando.ContaBancariaServicoDeComando;
 import cqrs.exemplo.aplicacao.comando.RemoverContaBancaria;
 import cqrs.exemplo.aplicacao.consulta.ConsultarContaBancariaPeloCliente;
 import cqrs.exemplo.aplicacao.consulta.ConsultarContaBancariaPeloId;
@@ -23,29 +23,29 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/conta")
-public class ContaBancariaApi {
+public class ContaBancariaRecurso {
 
-    private final ContaBancariaServicoDeConsulta contaBancariaServicoDeConsulta;
-    private final ContaBancariaServico contaBancariaServico;
+    private final ContaBancariaServicoDeConsulta servicoDeConsulta;
+    private final ContaBancariaServicoDeComando servicoDeComando;
 
     @Autowired
-    public ContaBancariaApi(ContaBancariaServicoDeConsulta contaBancariaServicoDeConsulta,
-                            ContaBancariaServico contaBancariaServico) {
-        this.contaBancariaServicoDeConsulta = contaBancariaServicoDeConsulta;
-        this.contaBancariaServico = contaBancariaServico;
+    public ContaBancariaRecurso(ContaBancariaServicoDeConsulta servicoDeConsulta,
+                                ContaBancariaServicoDeComando servicoDeComando) {
+        this.servicoDeConsulta = servicoDeConsulta;
+        this.servicoDeComando = servicoDeComando;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ContaBancariaDTO> obterPorId(@PathVariable String id) {
         Especificacao especificacao = new ConsultarContaBancariaPeloId(id);
-        RetornoDoServicoDeConsulta<ContaBancariaDTO> retornoDoServicoDeConsulta = this.contaBancariaServicoDeConsulta.executar(especificacao);
+        RetornoDoServicoDeConsulta<ContaBancariaDTO> retornoDoServicoDeConsulta = this.servicoDeConsulta.executar(especificacao);
         return ResponseEntity.ok(retornoDoServicoDeConsulta.valor());
     }
 
     @GetMapping
     public ResponseEntity<List<ContaBancariaDTO>> obterTodos(@RequestParam(value = "cliente", required = false) String cliente) {
         Especificacao especificacao = montarEspecificacao(cliente);
-        RetornoDoServicoDeConsulta<ContaBancariaDTO> retornoDoServicoDeConsulta = this.contaBancariaServicoDeConsulta.executar(especificacao);
+        RetornoDoServicoDeConsulta<ContaBancariaDTO> retornoDoServicoDeConsulta = this.servicoDeConsulta.executar(especificacao);
         return ResponseEntity.ok(retornoDoServicoDeConsulta.valores());
     }
 
@@ -60,21 +60,21 @@ public class ContaBancariaApi {
     @PostMapping
     public CompletableFuture<String> adicionar(@RequestBody AdicionarContaBancariaHttpDTO httpDTO) {
         AdicionarContaBancaria comando = new AdicionarContaBancaria(httpDTO.cliente, httpDTO.valor);
-        contaBancariaServico.executar(comando);
+        servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture(comando.id().id());
     }
 
     @PutMapping("/{id}")
     public CompletableFuture<String> atualizar(@PathVariable String id, @RequestBody AtualizarContaBancariaHttpDTO httpDTO) {
         AtualizarContaBancaria comando = new AtualizarContaBancaria(id, httpDTO.cliente, httpDTO.valor);
-        contaBancariaServico.executar(comando);
+        servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture(comando.id().id());
     }
 
     @DeleteMapping("/{id}")
     public CompletableFuture<String> remover(@PathVariable String id) {
         RemoverContaBancaria comando = new RemoverContaBancaria(id);
-        contaBancariaServico.executar(comando);
+        servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture("");
     }
 }

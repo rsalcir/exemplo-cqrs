@@ -1,6 +1,6 @@
 package cqrs.exemplo.aplicacao.comando;
 
-import cqrs.exemplo.aplicacao.comando.base.ServicoDeAplicacao;
+import cqrs.exemplo.aplicacao.comando.base.ServicoDeAplicacaoDeComando;
 import cqrs.exemplo.dominio.ContaBancaria;
 import cqrs.exemplo.dominio.ContaBancariaId;
 import cqrs.exemplo.dominio.base.ArmazenadorDeEventos;
@@ -11,34 +11,34 @@ import org.springframework.stereotype.Service;
 import java.util.function.Consumer;
 
 @Service
-public class ContaBancariaServico extends ServicoDeAplicacao {
+public class ContaBancariaServicoDeComando extends ServicoDeAplicacaoDeComando {
 
     private final ArmazenadorDeEventos armazenadorDeEventos;
 
     @Autowired
-    public ContaBancariaServico(ArmazenadorDeEventos armazenadorDeEventos) {
+    public ContaBancariaServicoDeComando(ArmazenadorDeEventos armazenadorDeEventos) {
         this.armazenadorDeEventos = armazenadorDeEventos;
     }
 
     private void quando(AdicionarContaBancaria comando) {
-        Consumer<ContaBancaria> funcao = (analise) -> analise.criar(comando.id(), comando.cliente(), comando.valor());
+        Consumer<ContaBancaria> funcao = (conta) -> conta.criar(comando.id(), comando.cliente(), comando.valor());
         atualizar(comando.id(), funcao);
     }
 
     private void quando(AtualizarContaBancaria comando) {
-        Consumer<ContaBancaria> funcao = (analise) -> analise.atualizar(comando.cliente(), comando.valor());
+        Consumer<ContaBancaria> funcao = (conta) -> conta.atualizar(comando.cliente(), comando.valor());
         atualizar(comando.id(), funcao);
     }
 
     private void quando(RemoverContaBancaria comando) {
-        Consumer<ContaBancaria> funcao = (analise) -> analise.remover();
+        Consumer<ContaBancaria> funcao = (conta) -> conta.remover();
         atualizar(comando.id(), funcao);
     }
 
-    private void atualizar(ContaBancariaId analiseId, Consumer funcao) {
-        EventoStream eventoStream = armazenadorDeEventos.obter(analiseId);
-        ContaBancaria analise = new ContaBancaria(eventoStream.eventos());
-        funcao.accept(analise);
-        armazenadorDeEventos.adicionar(analiseId, eventoStream.versao(), analise.mudancas());
+    private void atualizar(ContaBancariaId id, Consumer funcao) {
+        EventoStream eventoStream = armazenadorDeEventos.obter(id);
+        ContaBancaria conta = new ContaBancaria(eventoStream.eventos());
+        funcao.accept(conta);
+        armazenadorDeEventos.adicionar(id, eventoStream.versao(), conta.mudancas());
     }
 }

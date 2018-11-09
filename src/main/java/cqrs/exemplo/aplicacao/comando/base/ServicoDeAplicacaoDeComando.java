@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public abstract class ServicoDeAplicacao {
+public abstract class ServicoDeAplicacaoDeComando {
 
     @Transactional(rollbackFor = Exception.class)
     public void executar(Comando comando) {

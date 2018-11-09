@@ -1,12 +1,12 @@
 package cqrs.exemplo.porta.adaptador.persistencia.base;
 
 import cqrs.exemplo.dominio.base.IdentificadorUnico;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.lang.reflect.ParameterizedType;
 
 @Repository
@@ -21,29 +21,25 @@ public class RepositorioJpa<E, I extends IdentificadorUnico> {
     }
 
     public void adicionar(E entidade) {
-        sessao().save(entidade);
+        this.entityManager.persist(entidade);
     }
 
     public void remover(E entidade) {
-        sessao().delete(entidade);
+        this.entityManager.remove(entidade);
     }
 
     public void atualizar(E entidade) {
-        sessao().update(entidade);
+        this.entityManager.merge(entidade);
     }
 
     public E obter(I identificadorUnico) {
         Class<E> classe = obterClasseDaEntidade();
-        Query query = sessao().createQuery("FROM " + classe.getSimpleName() + " WHERE id.id = :identificador");
+        Query query = this.entityManager.createQuery("FROM " + classe.getSimpleName() + " WHERE id.id = :identificador");
         query.setParameter("identificador", identificadorUnico.id());
-        return (E) query.uniqueResult();
+        return (E) query.getSingleResult();
     }
 
     private Class<E> obterClasseDaEntidade() {
         return (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
-
-    private Session sessao() {
-        return entityManager.unwrap(Session.class);
     }
 }
