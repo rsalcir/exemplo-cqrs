@@ -1,12 +1,12 @@
 package cqrs.exemplo.dominio;
 
 import cqrs.exemplo.dominio.base.EventoDeDominio;
+import cqrs.exemplo.dominio.base.ObjetoDeEstado;
 
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ContaBancariaEstado {
+public class ContaBancariaEstado extends ObjetoDeEstado {
 
     private ContaBancariaId id;
     private String cliente;
@@ -16,16 +16,6 @@ public class ContaBancariaEstado {
 
     public ContaBancariaEstado(List<EventoDeDominio> eventoDeDominios) {
         eventoDeDominios.stream().forEach(this::atualizar);
-    }
-
-    public void atualizar(EventoDeDominio evento) {
-        try {
-            Class<?> classeDoEvento = evento.getClass();
-            Method metodoQueSeraExecutado = ContaBancariaEstado.class.getDeclaredMethod("quando", classeDoEvento);
-            metodoQueSeraExecutado.invoke(this, evento);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void quando(ContaCriada contaCriada) {

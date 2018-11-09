@@ -1,7 +1,7 @@
 package cqrs.exemplo.aplicacao.consulta;
 
 import cqrs.exemplo.aplicacao.consulta.base.especificacao.Especificacao;
-import cqrs.exemplo.aplicacao.consulta.modelo.ContaBancaria;
+import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancaria;
 import cqrs.exemplo.dominio.ContaBancariaId;
 
 import javax.persistence.criteria.CriteriaBuilder;

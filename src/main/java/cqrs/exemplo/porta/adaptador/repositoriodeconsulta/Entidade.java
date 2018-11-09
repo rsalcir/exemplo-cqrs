@@ -1,4 +1,4 @@
-package cqrs.exemplo.aplicacao.consulta.modelo.base;
+package cqrs.exemplo.porta.adaptador.repositoriodeconsulta;
 
 import cqrs.exemplo.dominio.base.IdentificadorUnico;
 

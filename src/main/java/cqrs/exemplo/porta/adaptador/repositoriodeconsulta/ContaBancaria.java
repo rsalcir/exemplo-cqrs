@@ -1,6 +1,5 @@
-package cqrs.exemplo.aplicacao.consulta.modelo;
+package cqrs.exemplo.porta.adaptador.repositoriodeconsulta;
 
-import cqrs.exemplo.aplicacao.consulta.modelo.base.Entidade;
 import cqrs.exemplo.dominio.ContaBancariaId;
 
 import javax.persistence.Entity;

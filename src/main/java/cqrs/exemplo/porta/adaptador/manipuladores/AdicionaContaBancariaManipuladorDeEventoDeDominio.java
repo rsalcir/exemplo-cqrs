@@ -1,6 +1,6 @@
 package cqrs.exemplo.porta.adaptador.manipuladores;
 
-import cqrs.exemplo.aplicacao.consulta.modelo.ContaBancaria;
+import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancaria;
 import cqrs.exemplo.dominio.ContaBancariaId;
 import cqrs.exemplo.dominio.ContaCriada;
 import cqrs.exemplo.porta.adaptador.manipuladores.base.ManipuladorDeEventoDeDominio;
