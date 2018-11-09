@@ -1,7 +1,7 @@
 package cqrs.exemplo;
 
-import cqrs.exemplo.comando.dominio.base.NotificadorDeEventoDeDominio;
-import cqrs.exemplo.consulta.manipuladordeevento.NotificadorDeEventoDeDominioPorSpring;
+import cqrs.exemplo.dominio.base.NotificadorDeEventoDeDominio;
+import cqrs.exemplo.porta.adaptador.manipuladores.base.NotificadorDeEventoDeDominioPorSpring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
