@@ -25,26 +25,30 @@ public class ContaBancaria {
 
     public void criar(ContaBancariaId id, String cliente, BigDecimal valor) {
         if (estadoAtual.criada()) {
-            throw new IllegalArgumentException("Não foi possivel criar a conta bancaria.");
+            notificarMensagemDeErro("Não é possivel recriar uma conta bancaria.");
         }
         ContaCriada contaCriada = new ContaCriada(id, cliente, valor);
         aplicar(contaCriada);
     }
 
     public void atualizar(String cliente, BigDecimal valor) {
-        if (!estadoAtual.criada() || estadoAtual.removida()) {
-            throw new IllegalArgumentException("Não é possivel atualizar a conta bancaria.");
+        if (!estadoAtual.criada() && estadoAtual.removida()) {
+            notificarMensagemDeErro("Não é possivel atualizar uma conta bancaria que não foi criada ou que ja foi removida.");
         }
         ContaAtualizada contaAtualizada = new ContaAtualizada(estadoAtual.id(), cliente, valor);
         aplicar(contaAtualizada);
     }
 
     public void remover() {
-        if (!estadoAtual.criada() || estadoAtual.removida()) {
-            throw new IllegalArgumentException("Não foi possivel remover a conta bancaria.");
+        if (!estadoAtual.criada() && estadoAtual.removida()) {
+            notificarMensagemDeErro("Não foi possivel remover uma conta bancaria já removida.");
         }
         ContaRemovida contaRemovida = new ContaRemovida(estadoAtual.id());
         aplicar(contaRemovida);
+    }
+
+    private void notificarMensagemDeErro(String mensagemDeErro) {
+        throw new IllegalArgumentException(mensagemDeErro);
     }
 
     public List<EventoDeDominio> mudancas() {
