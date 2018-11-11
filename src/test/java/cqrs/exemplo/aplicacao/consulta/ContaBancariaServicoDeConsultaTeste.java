@@ -11,7 +11,6 @@ import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancariaConsulta;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
