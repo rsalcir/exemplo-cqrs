@@ -1,9 +1,9 @@
 package cqrs.exemplo.porta.adaptador.recurso;
 
-import cqrs.exemplo.aplicacao.comando.AdicionarContaBancaria;
-import cqrs.exemplo.aplicacao.comando.AtualizarContaBancaria;
+import cqrs.exemplo.aplicacao.comando.AdicionarConta;
+import cqrs.exemplo.aplicacao.comando.AtualizarConta;
 import cqrs.exemplo.aplicacao.comando.ContaBancariaServicoDeComando;
-import cqrs.exemplo.aplicacao.comando.RemoverContaBancaria;
+import cqrs.exemplo.aplicacao.comando.RemoverConta;
 import cqrs.exemplo.aplicacao.consulta.ConsultarContaBancariaPeloCliente;
 import cqrs.exemplo.aplicacao.consulta.ConsultarContaBancariaPeloId;
 import cqrs.exemplo.aplicacao.consulta.ContaBancariaDTO;
@@ -59,21 +59,21 @@ public class ContaBancariaRecurso {
 
     @PostMapping
     public CompletableFuture<String> adicionar(@RequestBody AdicionarContaBancariaHttpDTO httpDTO) {
-        AdicionarContaBancaria comando = new AdicionarContaBancaria(httpDTO.cliente, httpDTO.valor);
+        AdicionarConta comando = new AdicionarConta(httpDTO.cliente, httpDTO.valor);
         servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture(comando.id().id());
     }
 
     @PutMapping("/{id}")
     public CompletableFuture<String> atualizar(@PathVariable String id, @RequestBody AtualizarContaBancariaHttpDTO httpDTO) {
-        AtualizarContaBancaria comando = new AtualizarContaBancaria(id, httpDTO.cliente, httpDTO.valor);
+        AtualizarConta comando = new AtualizarConta(id, httpDTO.cliente, httpDTO.valor);
         servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture(comando.id().id());
     }
 
     @DeleteMapping("/{id}")
     public CompletableFuture<String> remover(@PathVariable String id) {
-        RemoverContaBancaria comando = new RemoverContaBancaria(id);
+        RemoverConta comando = new RemoverConta(id);
         servicoDeComando.executar(comando);
         return CompletableFuture.completedFuture("");
     }

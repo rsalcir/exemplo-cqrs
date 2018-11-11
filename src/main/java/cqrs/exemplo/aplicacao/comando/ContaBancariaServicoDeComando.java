@@ -20,17 +20,17 @@ public class ContaBancariaServicoDeComando extends ServicoDeAplicacaoDeComando {
         this.armazenadorDeEventos = armazenadorDeEventos;
     }
 
-    private void quando(AdicionarContaBancaria comando) {
+    private void quando(AdicionarConta comando) {
         Consumer<ContaBancaria> funcao = (conta) -> conta.criar(comando.id(), comando.cliente(), comando.valor());
         atualizar(comando.id(), funcao);
     }
 
-    private void quando(AtualizarContaBancaria comando) {
+    private void quando(AtualizarConta comando) {
         Consumer<ContaBancaria> funcao = (conta) -> conta.atualizar(comando.cliente(), comando.valor());
         atualizar(comando.id(), funcao);
     }
 
-    private void quando(RemoverContaBancaria comando) {
+    private void quando(RemoverConta comando) {
         Consumer<ContaBancaria> funcao = (conta) -> conta.remover();
         atualizar(comando.id(), funcao);
     }

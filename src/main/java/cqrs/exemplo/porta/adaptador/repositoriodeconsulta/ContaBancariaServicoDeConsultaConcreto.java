@@ -6,10 +6,10 @@ import cqrs.exemplo.porta.adaptador.persistencia.base.ConsultaPorEspecificacaoJp
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ContaBancariaServicoDeConsultaConcreto extends ConsultaPorEspecificacaoJpa<ContaBancaria, ContaBancariaDTO> implements ContaBancariaServicoDeConsulta {
+public class ContaBancariaServicoDeConsultaConcreto extends ConsultaPorEspecificacaoJpa<ContaBancariaConsulta, ContaBancariaDTO> implements ContaBancariaServicoDeConsulta {
 
     @Override
-    protected ContaBancariaDTO criarDto(ContaBancaria contaBancaria) {
+    protected ContaBancariaDTO criarDto(ContaBancariaConsulta contaBancaria) {
         ContaBancariaDTO dto = new ContaBancariaDTO();
         dto.id = contaBancaria.identificador().id();
         dto.cliente = contaBancaria.cliente();

@@ -1,6 +1,6 @@
 package cqrs.exemplo.porta.adaptador.manipuladores;
 
-import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancaria;
+import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancariaConsulta;
 import cqrs.exemplo.dominio.ContaBancariaId;
 import cqrs.exemplo.dominio.ContaCriada;
 import cqrs.exemplo.porta.adaptador.manipuladores.base.ManipuladorDeEventoDeDominio;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 @Service
-public class AdicionaContaBancariaManipuladorDeEventoDeDominio extends RepositorioJpa<ContaBancaria, ContaBancariaId> implements ManipuladorDeEventoDeDominio<ContaCriada> {
+public class AdicionaContaBancariaManipuladorDeEventoDeDominio extends RepositorioJpa<ContaBancariaConsulta, ContaBancariaId> implements ManipuladorDeEventoDeDominio<ContaCriada> {
 
     @Autowired
     protected AdicionaContaBancariaManipuladorDeEventoDeDominio(EntityManager entityManager) {
@@ -22,7 +22,7 @@ public class AdicionaContaBancariaManipuladorDeEventoDeDominio extends Repositor
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void manipular(ContaCriada evento) {
-        ContaBancaria contaBancaria = new ContaBancaria(evento.id(), evento.cliente(), evento.valor());
+        ContaBancariaConsulta contaBancaria = new ContaBancariaConsulta(evento.id(), evento.cliente(), evento.valor());
         super.adicionar(contaBancaria);
     }
 }

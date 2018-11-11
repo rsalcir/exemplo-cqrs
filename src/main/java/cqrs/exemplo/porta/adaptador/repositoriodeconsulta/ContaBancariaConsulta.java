@@ -6,16 +6,16 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 @Entity
-public class ContaBancaria extends Entidade<ContaBancariaId> {
+public class ContaBancariaConsulta extends Entidade<ContaBancariaId> {
 
     private ContaBancariaId id;
     private String cliente;
     private BigDecimal valor;
 
-    private ContaBancaria() {
+    private ContaBancariaConsulta() {
     }
 
-    public ContaBancaria(ContaBancariaId id, String cliente, BigDecimal valor) {
+    public ContaBancariaConsulta(ContaBancariaId id, String cliente, BigDecimal valor) {
         this.id = id;
         this.cliente = cliente;
         this.valor = valor;

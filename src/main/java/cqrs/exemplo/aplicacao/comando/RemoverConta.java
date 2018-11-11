@@ -5,11 +5,11 @@ import cqrs.exemplo.dominio.ContaBancariaId;
 
 import java.util.Objects;
 
-public class RemoverContaBancaria implements Comando {
+public class RemoverConta implements Comando {
 
     private ContaBancariaId id;
 
-    public RemoverContaBancaria(String id) {
+    public RemoverConta(String id) {
         this.id = ContaBancariaId.criar(id);
     }
 
@@ -21,7 +21,7 @@ public class RemoverContaBancaria implements Comando {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RemoverContaBancaria that = (RemoverContaBancaria) o;
+        RemoverConta that = (RemoverConta) o;
         return Objects.equals(id, that.id);
     }
 

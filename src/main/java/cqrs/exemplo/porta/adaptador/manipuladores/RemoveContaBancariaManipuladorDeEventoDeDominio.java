@@ -1,6 +1,6 @@
 package cqrs.exemplo.porta.adaptador.manipuladores;
 
-import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancaria;
+import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancariaConsulta;
 import cqrs.exemplo.dominio.ContaBancariaId;
 import cqrs.exemplo.dominio.ContaRemovida;
 import cqrs.exemplo.porta.adaptador.manipuladores.base.ManipuladorDeEventoDeDominio;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 @Service
-public class RemoveContaBancariaManipuladorDeEventoDeDominio extends RepositorioJpa<ContaBancaria, ContaBancariaId> implements ManipuladorDeEventoDeDominio<ContaRemovida> {
+public class RemoveContaBancariaManipuladorDeEventoDeDominio extends RepositorioJpa<ContaBancariaConsulta, ContaBancariaId> implements ManipuladorDeEventoDeDominio<ContaRemovida> {
 
     @Autowired
     protected RemoveContaBancariaManipuladorDeEventoDeDominio(EntityManager entityManager) {
@@ -22,7 +22,7 @@ public class RemoveContaBancariaManipuladorDeEventoDeDominio extends Repositorio
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void manipular(ContaRemovida evento) {
-        ContaBancaria contaBancaria = super.obter(evento.id());
+        ContaBancariaConsulta contaBancaria = super.obter(evento.id());
         super.remover(contaBancaria);
     }
 }

@@ -31,8 +31,6 @@ public class ContaBancariaEstado extends ObjetoDeEstado {
     }
 
     private void quando(ContaRemovida contaRemovida) {
-        this.cliente = null;
-        this.valor = null;
         this.removida = Boolean.TRUE;
     }
 

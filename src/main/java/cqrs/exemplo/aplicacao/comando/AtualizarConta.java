@@ -6,13 +6,13 @@ import cqrs.exemplo.dominio.ContaBancariaId;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class AtualizarContaBancaria implements Comando {
+public class AtualizarConta implements Comando {
 
     private ContaBancariaId id;
     private String cliente;
     private BigDecimal valor;
 
-    public AtualizarContaBancaria(String id, String cliente, BigDecimal valor) {
+    public AtualizarConta(String id, String cliente, BigDecimal valor) {
         this.id = ContaBancariaId.criar(id);
         this.cliente = cliente;
         this.valor = valor;
@@ -34,7 +34,7 @@ public class AtualizarContaBancaria implements Comando {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        AtualizarContaBancaria comando = (AtualizarContaBancaria) object;
+        AtualizarConta comando = (AtualizarConta) object;
         return Objects.equals(id, comando.id) &&
                 Objects.equals(cliente, comando.cliente) &&
                 Objects.equals(valor, comando.valor);

@@ -1,7 +1,7 @@
 package cqrs.exemplo.aplicacao.consulta;
 
 import cqrs.exemplo.aplicacao.consulta.base.especificacao.Especificacao;
-import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancaria;
+import cqrs.exemplo.porta.adaptador.repositoriodeconsulta.ContaBancariaConsulta;
 import cqrs.exemplo.dominio.ContaBancariaId;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class ConsultarContaBancariaPeloId implements Especificacao<ContaBancaria> {
+public class ConsultarContaBancariaPeloId implements Especificacao<ContaBancariaConsulta> {
 
     private ContaBancariaId id;
 
@@ -18,7 +18,7 @@ public class ConsultarContaBancariaPeloId implements Especificacao<ContaBancaria
     }
 
     @Override
-    public Predicate paraCondicao(Root<ContaBancaria> root, CriteriaBuilder criteriaBuilder, CriteriaQuery criteriaQuery) {
+    public Predicate paraCondicao(Root<ContaBancariaConsulta> root, CriteriaBuilder criteriaBuilder, CriteriaQuery criteriaQuery) {
         return criteriaBuilder.equal(root.get("id"), id);
     }
 }

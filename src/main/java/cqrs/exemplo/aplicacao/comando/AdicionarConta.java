@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AdicionarContaBancaria implements Comando {
+public class AdicionarConta implements Comando {
 
     private ContaBancariaId id;
     private String cliente;
     private BigDecimal valor;
 
-    public AdicionarContaBancaria(String cliente, BigDecimal valor) {
+    public AdicionarConta(String cliente, BigDecimal valor) {
         this.id = ContaBancariaId.criar(UUID.randomUUID().toString());
         this.cliente = cliente;
         this.valor = valor;
@@ -35,7 +35,7 @@ public class AdicionarContaBancaria implements Comando {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        AdicionarContaBancaria comando = (AdicionarContaBancaria) object;
+        AdicionarConta comando = (AdicionarConta) object;
         return Objects.equals(id, comando.id) &&
                 Objects.equals(cliente, comando.cliente) &&
                 Objects.equals(valor, comando.valor);
